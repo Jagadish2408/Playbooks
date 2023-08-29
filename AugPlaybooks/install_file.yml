@@ -1,0 +1,9 @@
+---
+- name: uninstalling a Package
+  hosts: all
+  become: true
+  tasks:
+  - name: Uninstalling a Package
+    yum:
+      name: git
+      state: absent

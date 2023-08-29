@@ -1,0 +1,30 @@
+---
+- name: Installing Tomcat in nodes
+  hosts: all
+  become: true
+  tasks:
+  - name: Installing Java in nodes
+    yum:
+      name: java
+      state: installed
+
+  - name: Downloading Tomcat
+    get_url:
+      url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.92/bin/apache-tomcat-8.5.92.tar.gz
+      dest: /opt/
+
+  - name: Extracting Tomcat
+    unarchive:
+      src: /opt/apache-tomcat-8.5.92.tar.gz
+      dest: /opt
+      remote_src: true
+
+  - name: Executing permissions
+    file:
+      path: /opt/apache-tomcat-8.5.92/bin/startup.sh
+      mode: "0777"
+  
+  - name: Start service
+    shell: nohup ./startup.sh
+    args:
+      chdir: /opt/apache-tomcat-8.5.92/bin/

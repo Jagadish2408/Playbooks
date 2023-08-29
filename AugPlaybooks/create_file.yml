@@ -1,0 +1,9 @@
+---
+- name: MyTest
+  hosts: all
+  become: true
+  tasks:
+  - name: Creating file
+    file:
+      path: /home/ansadmin/demofile
+      state: absent
